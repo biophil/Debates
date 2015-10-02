@@ -1,0 +1,1 @@
+# this script will do the necessary stuff to bring the debate transcript into R in a useful way
