@@ -9,6 +9,11 @@ isAnnotation <- function (word) {
         to.ret
 }
 
+cleanPunct <- function(word) {
+        to.ret <- gsub("[^[:alnum:]()]", "", word)
+        to.ret
+}
+
 
 ## parse-debate takes the raw character vector, picks out names, and builds the debate structure
 parseDebate <- function(raw.input){
@@ -23,16 +28,18 @@ parseDebate <- function(raw.input){
                 }
         }
         
-        speaker <- raw.input[position] # initialize speaker name
+        speaker <- character()
+        #speaker <- raw.input[position] # initialize speaker name
         speaker.ID <- 1 # loop begins at first found speaker name
         for(i in position:length(raw.input)){
-                if(isName(raw.input[i])){
-                        speaker <- raw.input[i] # current speaker
+                this.word <- raw.input[i] # this.word is raw; no cleaning yet
+                if(isName(this.word)){ # name-check requires the ending colon, so not clean yet
+                        speaker <- cleanPunct(this.word) # current speaker (w/ colon removed)
                 } else { # if not a name, this word belongs to the last person who spoke
-                        if(!isAnnotation(raw.input[i])){
-                                speaker.words[[speaker]] <- append(speaker.words[[speaker]],raw.input[i])
-                        } else {
-                              1  
+                        this.word <- cleanPunct(this.word) # stip punctuation
+                        if(!isAnnotation(this.word)){ # check if annotation
+                                # then append
+                                speaker.words[[speaker]] <- append(speaker.words[[speaker]],this.word)
                         }
                 }
         }
