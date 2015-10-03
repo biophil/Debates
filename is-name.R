@@ -29,3 +29,11 @@ parseDebate <- function(raw.input){
         }
         speaker.words
 }
+
+mean.wordLength <- function(charVec){
+        mean(nchar(charVec))
+}
+
+maximum.wordLength <- function(charVec){
+        max(nchar(charVec))
+}

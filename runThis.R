@@ -9,3 +9,7 @@ if(!exists('rawDebate')) {
 if(!exists('wordStruct')) {
         wordStruct <- parseDebate(rawDebate)
 }
+
+numWords <- lapply(wordStruct, length)
+avg.wordLength <- sapply(wordStruct, mean.wordLength)
+max.wordLength <- sapply(wordStruct, maximum.wordLength)
