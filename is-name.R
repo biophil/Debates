@@ -4,6 +4,11 @@ isName <- function(word){
        to.ret
 }
 
+isAnnotation <- function (word) {
+        to.ret <- grepl("^[(][A-Za-z \t\r\n\v\f]{1,}[)]$",word) # something surrounded by parentheses
+        to.ret
+}
+
 
 ## parse-debate takes the raw character vector, picks out names, and builds the debate structure
 parseDebate <- function(raw.input){
@@ -24,7 +29,11 @@ parseDebate <- function(raw.input){
                 if(isName(raw.input[i])){
                         speaker <- raw.input[i] # current speaker
                 } else { # if not a name, this word belongs to the last person who spoke
-                        speaker.words[[speaker]] <- append(speaker.words[[speaker]],raw.input[i])
+                        if(!isAnnotation(raw.input[i])){
+                                speaker.words[[speaker]] <- append(speaker.words[[speaker]],raw.input[i])
+                        } else {
+                              1  
+                        }
                 }
         }
         speaker.words
