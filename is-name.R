@@ -17,7 +17,9 @@ cleanPunct <- function(word) {
 
 ## parse-debate takes the raw character vector, picks out names, and builds the debate structure
 parseDebate <- function(raw.input){
+        to.ret <- list()
         speaker.words <- list() # will be list of speaker words
+        speaker.annot <- list()
         position <- numeric()
         
         ## first look through the beginning and discard everything that's lame
@@ -38,12 +40,18 @@ parseDebate <- function(raw.input){
                 } else { # if not a name, this word belongs to the last person who spoke
                         this.word <- cleanPunct(this.word) # stip punctuation
                         if(!isAnnotation(this.word)){ # check if annotation
-                                # then append
-                                speaker.words[[speaker]] <- append(speaker.words[[speaker]],this.word)
+                                # then append if longer than 0 characters
+                                if(nchar(this.word>0)) {
+                                        speaker.words[[speaker]] <- 
+                                                append(speaker.words[[speaker]],this.word)
+                                }
+                        } else { # append annotation to speaker's list
+                               speaker.annot[[speaker]] <- 
+                                       append(speaker.annot[[speaker]],this.word) 
                         }
                 }
         }
-        speaker.words
+        to.ret <- list(words=speaker.words,annot=speaker.annot)
 }
 
 mean.wordLength <- function(charVec){

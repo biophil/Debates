@@ -10,6 +10,7 @@ if(!exists('wordStruct')) {
         wordStruct <- parseDebate(rawDebate)
 }
 
-numWords <- lapply(wordStruct, length)
-avg.wordLength <- sapply(wordStruct, mean.wordLength)
-max.wordLength <- sapply(wordStruct, maximum.wordLength)
+numWords <- lapply(wordStruct$words, length) # vector of the number of words said by each cand
+wordLengths <- lapply(wordStruct$words, nchar) # vector of all word lengths
+avg.wordLength <- sapply(wordStruct$words, mean.wordLength) # vector of average word-length by each cand
+max.wordLength <- sapply(wordStruct$words, maximum.wordLength) # vector of max word-length by each cand
